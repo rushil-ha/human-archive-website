@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Human Archive — Archiving the world for embodied intelligence</title>
+  <meta property="og:title" content="Human Archive — Archiving the world for embodied intelligence">
+  <meta property="og:description" content="The foundational multimodal dataset for human sensorimotor intelligence. Powering the next generation of embodied AI.">
+  <meta property="og:image" content="https://humanarchive.ai/og-preview.png">
+  <meta property="og:url" content="https://humanarchive.ai">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Human Archive — Archiving the world for embodied intelligence">
+  <meta name="twitter:description" content="The foundational multimodal dataset for human sensorimotor intelligence. Powering the next generation of embodied AI.">
+  <meta name="twitter:image" content="https://humanarchive.ai/og-preview.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #000;
+      --surface: #0c0c0c;
+      --border: #1c1c1c;
+      --border2: #2e2e2e;
+      --white: #fff;
+      --gray1: #e0e0e0;
+      --gray2: #a0a0a0;
+      --gray3: #5a5a5a;
+      --gray4: #303030;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Inter', 'Helvetica Neue', sans-serif;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── PAGE ── */
+    #page { opacity: 1; }
+
+    /* ── GRID HEADER (floats over grid) ── */
+    #grid-header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 2rem;
+      opacity: 0;
+      transition: opacity 0.5s, background 0.3s, border-color 0.3s;
+      border-bottom: 1px solid transparent;
+    }
+
+    #grid-header.visible { opacity: 1; }
+    #grid-header { opacity: 0; }
+    #grid-header.solid { opacity: 1; }
+
+    #grid-header.solid {
+      background: rgba(0,0,0,0.88);
+      backdrop-filter: blur(14px);
+      border-bottom-color: var(--border);
+    }
+
+    .header-logo-img {
+      height: 28px;
+      width: auto;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+    }
+
+    .header-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .header-links a {
+      font-size: 0.76rem;
+      color: var(--gray3);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .header-links a:hover { color: var(--white); }
+
+    .header-cta {
+      font-size: 0.76rem;
+      font-weight: 500;
+      color: var(--bg);
+      background: var(--white);
+      padding: 0.48rem 1.2rem;
+      border-radius: 3px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .header-cta:hover { opacity: 0.75; }
+
+    /* ── HERO SPLIT ── */
+    .hero-split {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      height: 100vh;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 2.5rem 2.5rem 2.5rem;
+      border-right: 1px solid var(--border);
+    }
+
+    .hero-left-top {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .hero-wordmark img {
+      height: 36px;
+      width: auto;
+      mix-blend-mode: screen;
+      display: block;
+    }
+
+    .hero-title {
+      font-size: clamp(2.4rem, 3.5vw, 3.8rem);
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-top: 2rem;
+    }
+
+    .hero-tagline {
+      font-size: clamp(1.1rem, 1.6vw, 1.5rem);
+      font-weight: 300;
+      color: var(--gray2);
+      letter-spacing: -0.01em;
+      line-height: 1.5;
+      margin-top: 0.75rem;
+    }
+
+    .hero-left-bottom {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 500;
+      padding: 0.75rem 1.5rem;
+      border-radius: 3px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+      text-align: center;
+    }
+
+    .hero-cta-primary {
+      background: var(--white);
+      color: var(--bg);
+    }
+
+    .hero-cta-outline {
+      background: transparent;
+      color: var(--white);
+      border: 1px solid var(--border2);
+    }
+
+    .hero-cta:hover { opacity: 0.75; }
+
+    /* ── FULL-SCREEN VIDEO GRID ── */
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: 2fr 2fr 1.5fr;
+      height: 100vh;
+      gap: 1px;
+      background: var(--border);
+    }
+
+    /* Explicit tile placement — 4 cols × 3 rows */
+    .tile:nth-child(1) { grid-column: 1 / 3; grid-row: 1 / 3; } /* Multimodal Ego  2×2 */
+    .tile:nth-child(2) { grid-column: 3 / 5; grid-row: 1;     } /* 3D Pose    wide 2×1 */
+    .tile:nth-child(3) { grid-column: 3;     grid-row: 2;     } /* Adobe 3D        1×1 */
+    .tile:nth-child(4) { grid-column: 4;     grid-row: 2;     } /* Hand Tracking   1×1 */
+    .tile:nth-child(5) { grid-column: 1;     grid-row: 3;     } /* Depth           1×1 */
+    .tile:nth-child(6) { grid-column: 2;     grid-row: 3;     } /* Annotation      1×1 */
+    .tile:nth-child(7) { grid-column: 3;     grid-row: 3;     } /* Tactile         1×1 */
+    .tile:nth-child(8) { grid-column: 4;     grid-row: 3;     } /* Segmentation    1×1 */
+
+    .tile {
+      position: relative;
+      overflow: hidden;
+      background: #050505;
+      opacity: 0;
+    }
+
+    /* Tile entrance */
+    .tile { opacity: 1; transform: none; }
+
+    .tile video {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      transition: transform 0.5s ease, opacity 0.3s;
+    }
+
+    .tile:hover video {
+      transform: scale(1.03);
+      opacity: 0.85;
+    }
+
+    .tile-label {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 1.4rem 1.2rem 1rem;
+      background: linear-gradient(transparent, rgba(0,0,0,0.78));
+      opacity: 0.45;
+      transition: opacity 0.25s;
+      pointer-events: none;
+    }
+
+    .tile:hover .tile-label { opacity: 1; }
+
+    .tile-tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gray2);
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .tile-name {
+      font-size: 0.82rem;
+      color: var(--white);
+      font-weight: 400;
+    }
+
+    /* Tile 1 (featured) — larger label */
+    .tile:nth-child(1) .tile-label { padding: 2.5rem 2rem 1.6rem; }
+    .tile:nth-child(1) .tile-tag  { font-size: 0.65rem; }
+    .tile:nth-child(1) .tile-name { font-size: 1.05rem; }
+
+    /* ── BELOW FOLD ── */
+
+    /* ── AUDIENCE DIVIDER ── */
+    .audience-divider {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .audience-half {
+      padding: 1rem 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .audience-half:first-child { border-right: 1px solid var(--border); }
+
+    .audience-pip {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .audience-half:first-child .audience-pip { background: var(--gray3); }
+    .audience-half:last-child  .audience-pip { background: var(--white); opacity: 0.5; }
+
+    .audience-tag {
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gray3);
+    }
+
+    .audience-half:last-child .audience-tag { color: var(--gray2); }
+
+    /* ── MAIN CONTENT SECTION ── */
+    .main-section {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .main-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 6rem 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .main-headline {
+      font-size: clamp(1.8rem, 2.8vw, 2.8rem);
+      font-weight: 300;
+      color: var(--white);
+      letter-spacing: -0.025em;
+      line-height: 1.13;
+      margin-bottom: 3rem;
+    }
+
+    .stats-row {
+      display: flex;
+      gap: 2.5rem;
+      padding-bottom: 2.8rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 0;
+    }
+
+    .stat { display: flex; flex-direction: column; gap: 0.3rem; }
+
+    .stat-num {
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--white);
+      letter-spacing: -0.03em;
+    }
+
+    .stat-label {
+      font-size: 0.7rem;
+      color: var(--gray3);
+      font-weight: 300;
+      white-space: nowrap;
+    }
+
+    .use-cases { margin-top: 0; }
+
+    .use-case-item {
+      padding: 1.1rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: var(--gray2);
+      transition: color 0.18s, padding-left 0.18s;
+      cursor: default;
+    }
+    .use-case-item:first-child { border-top: 1px solid var(--border); }
+    .use-case-item:hover { color: var(--white); padding-left: 0.5rem; }
+
+    /* YouTube */
+    .yt-wrapper {
+      width: 100%;
+      aspect-ratio: 16/9;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #0a0a0a;
+      border: 1px solid var(--border);
+      position: sticky;
+      top: 5rem;
+    }
+
+    .yt-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: opacity 0.2s;
+    }
+    .yt-wrapper:hover img { opacity: 0.88; }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 0.75s cubic-bezier(.16,1,.3,1), transform 0.75s cubic-bezier(.16,1,.3,1);
+    }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    .reveal-group > * {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s cubic-bezier(.16,1,.3,1), transform 0.6s cubic-bezier(.16,1,.3,1);
+    }
+    .reveal-group.in > *:nth-child(1) { opacity:1; transform:none; transition-delay:0.00s; }
+    .reveal-group.in > *:nth-child(2) { opacity:1; transform:none; transition-delay:0.07s; }
+    .reveal-group.in > *:nth-child(3) { opacity:1; transform:none; transition-delay:0.14s; }
+    .reveal-group.in > *:nth-child(4) { opacity:1; transform:none; transition-delay:0.21s; }
+    .reveal-group.in > *:nth-child(5) { opacity:1; transform:none; transition-delay:0.28s; }
+    .reveal-group.in > *:nth-child(6) { opacity:1; transform:none; transition-delay:0.35s; }
+
+    /* ── MAIN CONTENT SECTION ── */
+    .main-section { border-bottom: 1px solid var(--border); }
+
+    .main-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 6rem 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .main-headline {
+      font-size: clamp(1.8rem, 2.8vw, 2.8rem);
+      font-weight: 300;
+      color: var(--white);
+      letter-spacing: -0.025em;
+      line-height: 1.13;
+      margin-bottom: 3rem;
+    }
+
+    .stats-row {
+      display: flex;
+      gap: 2.5rem;
+      padding-bottom: 2.8rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .stat { display: flex; flex-direction: column; gap: 0.3rem; }
+
+    .stat-num {
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--white);
+      letter-spacing: -0.03em;
+    }
+
+    .stat-label {
+      font-size: 0.7rem;
+      color: var(--gray3);
+      font-weight: 300;
+      white-space: nowrap;
+    }
+
+    .use-case-item {
+      padding: 1.1rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: var(--gray2);
+      transition: color 0.18s, padding-left 0.18s;
+      cursor: default;
+    }
+    .use-case-item:first-child { border-top: 1px solid var(--border); margin-top: 0; }
+    .use-case-item:hover { color: var(--white); padding-left: 0.5rem; }
+
+    .yt-wrapper {
+      width: 100%;
+      aspect-ratio: 16/9;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #0a0a0a;
+      border: 1px solid var(--border);
+      position: sticky;
+      top: 5rem;
+    }
+
+    .yt-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: opacity 0.2s;
+    }
+    .yt-wrapper:hover img { opacity: 0.88; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .footer-left { display: flex; flex-direction: column; }
+
+    .footer-logo {
+      margin-bottom: 0.7rem;
+    }
+
+    .footer-logo img {
+      height: 20px;
+      width: auto;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+      opacity: 0.5;
+      display: block;
+    }
+
+    .footer-tagline {
+      font-size: 0.78rem;
+      color: var(--gray3);
+      font-weight: 300;
+      margin-bottom: 1.6rem;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 0.6rem;
+    }
+
+    .footer-social a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border: 1px solid var(--border2);
+      border-radius: 5px;
+      color: var(--gray3);
+      text-decoration: none;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .footer-social a:hover { color: var(--white); border-color: var(--gray3); }
+    .footer-social svg { width: 15px; height: 15px; fill: currentColor; }
+
+    .footer-right { display: flex; flex-direction: column; align-items: flex-end; }
+
+    .footer-nav-label {
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray3);
+      margin-bottom: 1.1rem;
+    }
+
+    .footer-nav {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.75rem;
+    }
+
+    .footer-nav a {
+      font-size: 0.82rem;
+      color: var(--gray2);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-nav a:hover { color: var(--white); }
+
+    /* ── BACKED BY STRIP ── */
+    .backed-strip {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.4rem;
+    }
+
+    .backed-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gray3);
+    }
+
+    .backed-logos {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3.5rem;
+      flex-wrap: wrap;
+    }
+
+    .backed-logo-item {
+      display: flex;
+      align-items: center;
+      opacity: 0.65;
+      transition: opacity 0.2s;
+    }
+
+    .backed-logo-item:hover { opacity: 1; }
+
+    .backed-logo-item img {
+      height: 28px;
+      width: auto;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+    }
+
+    .backed-logo-item.yc img      { height: 20px; }
+    .backed-logo-item.berkeley img { height: 26px; }
+    .backed-logo-item.stanford img { height: 28px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .header-links { display: none; }
+      .hero-split { grid-template-columns: 1fr; height: auto; }
+      .hero-left { border-right: none; border-bottom: 1px solid var(--border); padding: 3rem 1.5rem; }
+      .video-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+        height: auto;
+      }
+      .tile:nth-child(1) { grid-column: 1 / 3; grid-row: auto; }
+      .tile:nth-child(2),
+      .tile:nth-child(3),
+      .tile:nth-child(4),
+      .tile:nth-child(5),
+      .tile:nth-child(6),
+      .tile:nth-child(7),
+      .tile:nth-child(8) { grid-column: auto; grid-row: auto; }
+      .tile { aspect-ratio: 16/9; }
+      .tile video { height: 100%; }
+      .main-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .yt-wrapper { position: static; }
+      footer { grid-template-columns: 1fr; }
+      .footer-right { align-items: flex-start; }
+      .footer-nav { align-items: flex-start; }
+    }
+
+    @media (max-width: 580px) {
+      .stats-row { gap: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════ MAIN PAGE ═══════════ -->
+<div id="page">
+
+  <!-- Floating header -->
+  <header id="grid-header">
+    <img src="Human Archive Logos/fewewewew.png" alt="Human Archive" class="header-logo-img">
+    <div style="display:flex;gap:0.6rem;">
+      <a href="https://cal.com/human-archive-0mw2ab" target="_blank" class="header-cta" style="background:transparent;color:var(--white);border:1px solid var(--border2);">Let's Talk</a>
+      <a href="request-data.html" class="header-cta">Request Access</a>
+    </div>
+  </header>
+
+  <!-- HERO SPLIT -->
+  <div class="hero-split">
+
+    <!-- 1/3 — Brand panel -->
+    <div class="hero-left">
+      <div class="hero-left-top">
+        <div class="hero-wordmark">
+          <img src="Human Archive Logos/human archive.png" alt="Human Archive">
+        </div>
+        <h1 class="hero-title">Human Archive.</h1>
+        <p class="hero-tagline">Archiving the world for embodied intelligence.</p>
+      </div>
+      <div class="hero-left-bottom">
+        <a href="request-data.html" class="hero-cta hero-cta-primary">Request Access</a>
+        <a href="https://cal.com/human-archive-0mw2ab" target="_blank" class="hero-cta hero-cta-outline">Let's Talk</a>
+      </div>
+    </div>
+
+  <!-- 2/3 — Video grid -->
+  <div class="video-grid" id="video-grid">
+
+    <div class="tile">
+      <video autoplay muted loop playsinline>
+        <source src="https://hawebsitevideos.s3.ap-south-1.amazonaws.com/Multimodal%20Ego%20-%20Video.mp4" type="video/mp4">
+      </video>
+      <div class="tile-label">
+        <span class="tile-tag">Featured — Multimodal Egocentric</span>
+        <span class="tile-name">Synchronized multimodal capture</span>
+      </div>
+    </div>
+
+    <div class="tile">
+      <video autoplay muted loop playsinline>
+        <source src="https://hawebsitevideos.s3.ap-south-1.amazonaws.com/3d%20pose%20demo.mp4" type="video/mp4">
+      </video>
+      <div class="tile-label">
+        <span class="tile-tag">Motion Capture</span>
+        <span class="tile-name">3D Pose Estimation</span>
+      </div>
+    </div>
+
+    <div class="tile">
+      <video autoplay muted loop playsinline>
+        <source src="https://hawebsitevideos.s3.ap-south-1.amazonaws.com/Adobe%20Express%20-%203D%20pose%20demo.mp4" type="video/mp4">
+      </video>
+      <div class="tile-label">
+        <span class="tile-tag">3D Pose — Stylised</span>
+        <span class="tile-name">3D Pose Visualisation</span>
+      </div>
+    </div>
+
+    <div class="tile">
+      <video autoplay muted loop playsinline>
+        <source src="https://hawebsitevideos.s3.ap-south-1.amazonaws.com/hand%20tracking%20demo.mp4" type="video/mp4">
+      </video>
+      <div class="tile-label">
+        <span class="tile-tag">Hand Tracking</span>
+        <span class="tile-name">Real-Time Hand Tracking</span>
+      </div>
+    </div>
+
+    <div class="tile">
+      <video autoplay muted loop playsinline>
+        <source src="https://hawebsitevideos.s3.ap-south-1.amazonaws.com/depth%20demo.mp4" type="video/mp4">
+      </video>
+      <div class="tile-label">
+        <span class="tile-tag">Stereo Depth</span>
+        <span class="tile-name">Dense Depth Maps</span>
+      </div>
+    </div>
+
+    <div class="tile">
+      <video autoplay muted loop playsinline>
+        <source src="https://hawebsitevideos.s3.ap-south-1.amazonaws.com/action%20annotation%20demo.mp4" type="video/mp4">
+      </video>
+      <div class="tile-label">
+        <span class="tile-tag">Annotation</span>
+        <span class="tile-name">Action Labels</span>
+      </div>
+    </div>
+
+    <div class="tile">
+      <video autoplay muted loop playsinline>
+        <source src="https://hawebsitevideos.s3.ap-south-1.amazonaws.com/glove_synthetic_demo.mp4" type="video/mp4">
+      </video>
+      <div class="tile-label">
+        <span class="tile-tag">Tactile</span>
+        <span class="tile-name">Glove & Tactile Sensing</span>
+      </div>
+    </div>
+
+    <div class="tile">
+      <video autoplay muted loop playsinline>
+        <source src="https://hawebsitevideos.s3.ap-south-1.amazonaws.com/testclip%20segmentation.mp4" type="video/mp4">
+      </video>
+      <div class="tile-label">
+        <span class="tile-tag">Segmentation</span>
+        <span class="tile-name">Object & Scene Segmentation</span>
+      </div>
+    </div>
+
+  </div><!-- /.video-grid -->
+  </div><!-- /.hero-split -->
+
+  <!-- ── BELOW THE FOLD ── -->
+
+  <!-- Backed by strip -->
+  <div class="backed-strip reveal">
+    <span class="backed-label">Backed by</span>
+    <div class="backed-logos">
+
+      <!-- Y Combinator -->
+      <div class="backed-logo-item yc">
+        <img src="Y Combinator_id-5KfjQKW_0.svg" alt="Y Combinator">
+      </div>
+
+      <!-- UC Berkeley -->
+      <div class="backed-logo-item berkeley">
+        <img src="UC Berkeley_Logo_0.svg" alt="UC Berkeley">
+      </div>
+
+      <!-- Stanford -->
+      <div class="backed-logo-item stanford">
+        <img src="Stanford University_idJUIPPYM3_0.svg" alt="Stanford">
+      </div>
+
+    </div>
+  </div>
+
+<!-- ── MAIN CONTENT ── -->
+  <div id="below" class="main-section">
+    <div class="main-inner">
+
+      <!-- Left column -->
+      <div>
+        <h2 class="main-headline reveal">We help businesses scale profits and efficiency with AI</h2>
+
+        <div class="stats-row reveal-group">
+          <div class="stat">
+            <span class="stat-num">50,000+</span>
+            <span class="stat-label">Contributor Network</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">125+</span>
+            <span class="stat-label">National Partnerships</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">1,000+</span>
+            <span class="stat-label">Custom Rigs</span>
+          </div>
+        </div>
+
+        <div class="reveal-group" style="margin-top:0;">
+          <div class="use-case-item">Homes / Hotels</div>
+          <div class="use-case-item">Industral</div>
+          <div class="use-case-item">Resturants / Retail</div>
+          <div class="use-case-item">Horticulture</div>
+          <div class="use-case-item">Transportation</div>
+          <div class="use-case-item">Construction</div>
+        </div>
+      </div>
+
+      <!-- Right column — YouTube -->
+      <div>
+        <a href="https://www.youtube.com/watch?v=Jb8C5EAT2Qw" target="_blank" class="yt-wrapper reveal">
+          <img src="youtube-thumbnail.png" alt="Human Archive — Watch on YouTube">
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <footer id="contact" class="reveal">
+    <div class="footer-left">
+      <div class="footer-logo">
+        <img src="Human Archive Logos/fewewewew.png" alt="Human Archive">
+      </div>
+      <p class="footer-tagline">Let's archive the world for embodied intelligence.</p>
+      <div class="footer-social">
+        <!-- LinkedIn -->
+        <a href="https://www.linkedin.com/company/human-archive/" target="_blank" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+        <!-- Twitter / X -->
+        <a href="https://x.com/babugi28" target="_blank" aria-label="Twitter / X">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <!-- Email -->
+        <a href="mailto:team@humanarchive.ai" aria-label="Email">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-right">
+      <p class="footer-nav-label">Navigation</p>
+      <nav class="footer-nav">
+        <a href="#video-grid">Back to top</a>
+        <a href="request-data.html">Request Data</a>
+        <a href="https://cal.com/human-archive-0mw2ab" target="_blank">Let's Talk</a>
+      </nav>
+    </div>
+  </footer>
+
+</div><!-- /#page -->
+
+<script>
+/* ═══════════════════════════════════════════════════
+   SCROLL REVEAL
+═══════════════════════════════════════════════════ */
+window.addEventListener('DOMContentLoaded', function() {
+  initScrollReveal();
+});
+
+function initScrollReveal() {
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal, .reveal-group').forEach(el => {
+    io.observe(el);
+    const r = el.getBoundingClientRect();
+    if (r.top < window.innerHeight) el.classList.add('in');
+  });
+}
+
+/* ═══════════════════════════════════════════════════
+   SCROLL → NAV SOLIDIFY
+═══════════════════════════════════════════════════ */
+window.addEventListener('scroll', () => {
+  const h = document.getElementById('grid-header');
+  if (window.scrollY > 60) {
+    h.classList.add('solid');
+  } else {
+    h.classList.remove('solid');
+  }
+}, { passive: true });
+</script>
+
+</body>
+</html>
