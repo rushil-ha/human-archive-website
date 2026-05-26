@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Human Archive</title>
+<style>
+  :root {
+    --phi: 1.618;
+    --base: 14px;
+
+    /* Type scale: base × φⁿ */
+    --text-sm: calc(var(--base) / var(--phi));               /* ~9.3px → floored at 11px in use */
+    --text-base: var(--base);                                 /* 15px  */
+    --text-md: calc(var(--base) * var(--phi));                /* ~24px */
+    --text-lg: calc(var(--base) * var(--phi) * var(--phi));   /* ~39px */
+
+    /* Vertical rhythm: 1em × φⁿ */
+    --space-tight: calc(1em / var(--phi));                    /* ~0.62em — within-list gap */
+    --space-1: 1em;                                           /* 1em      — micro */
+    --space-2: calc(1em * var(--phi));                        /* ~1.62em — paragraph */
+    --space-3: calc(1em * var(--phi) * var(--phi));           /* ~2.62em — section */
+    --space-4: calc(1em * var(--phi) * var(--phi) * var(--phi)); /* ~4.24em — page */
+
+    /* Horizontal: column = viewport / φ, capped; sits at 1/φ² (~38%) from the left */
+    --col-max: 720px;
+    --col-width: min(var(--col-max), calc(100vw / var(--phi)));
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #fbf8f0;
+    background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.22 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    background-repeat: repeat;
+    background-size: 240px 240px;
+    color: #000;
+  }
+
+  body {
+    font-family: "JetBrains Mono", Menlo, Consolas, monospace;
+    font-size: var(--text-base);
+    line-height: var(--phi);
+  }
+
+  .container {
+    width: var(--col-width);
+    margin-left: calc((100% - var(--col-width)) / var(--phi) / var(--phi));
+    margin-right: auto;
+    padding-top: var(--space-4);
+    padding-bottom: var(--space-4);
+  }
+
+  h1 {
+    font-family: Charter, "Iowan Old Style", Georgia, serif;
+    font-weight: 600;
+    font-size: calc(var(--text-lg) * 1.3);
+    line-height: 1.15;
+    margin: 0 0 var(--space-2);
+  }
+
+  h2 {
+    font-family: "JetBrains Mono", Menlo, Consolas, monospace;
+    font-weight: 600;
+    font-size: var(--text-base);
+    margin: var(--space-3) 0 var(--space-1);
+  }
+
+  p {
+    margin: 0 0 var(--space-2);
+  }
+
+  a {
+    color: #000;
+    text-decoration: underline;
+  }
+
+  ul.plain {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-2);
+  }
+
+  ul.plain li {
+    margin: 0 0 var(--space-tight);
+  }
+
+  ul.bulleted {
+    padding-left: var(--space-2);
+    margin: 0 0 var(--space-2);
+  }
+
+  ul.bulleted li {
+    margin: 0 0 var(--space-tight);
+  }
+
+  .role-group {
+    margin: var(--space-2) 0 var(--space-tight);
+    font-weight: 600;
+  }
+
+  blockquote {
+    font-style: italic;
+    margin: var(--space-3) 0 var(--space-tight);
+    padding: 0;
+    padding-left: var(--space-2);
+  }
+
+  .attribution {
+    text-align: right;
+    font-size: max(11px, var(--text-sm));
+    margin: 0 0 var(--space-3);
+  }
+
+  .footer-links {
+    margin-top: var(--space-4);
+    font-size: max(11px, var(--text-sm));
+  }
+
+  @media (max-width: 720px) {
+    .container {
+      width: auto;
+      max-width: var(--col-max);
+      margin-left: 0;
+      margin-right: 0;
+      padding-left: var(--space-2);
+      padding-right: var(--space-2);
+      padding-top: var(--space-3);
+      padding-bottom: var(--space-3);
+    }
+}
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>Human Archive</h1>
+
+    <h2>Our Mission</h2>
+    <p>We're a data lab modeling human embodied intelligence.</p>
+
+    <p>Despite decades of research, we still barely understand human physical, cognitive, or behavioral intelligence. Our goal is to learn how humans interact with the world.</p>
+
+    <p>We collect and label video, sensor, audio, and long-horizon data through our 100,000+ contributor network and 500+ industry partners across homes, hotels, restaurants, agriculture, industrial, construction, retail, etc.</p>
+
+    <p>Our technology is foundational infrastructure for automating manual labor, increasing global abundance, shifting human effort toward creativity, and advancing how we understand the brain, cognition, prosthetics, and rehabilitation.</p>
+
+    <h2>Get in touch</h2>
+    <p>If you're a researcher, <a href="contact.html">click here</a> and we will send you our customer dashboard and samples. Right now, we have RGB, RGB-D, audio, tactile, and mocap available OTS.</p>
+
+    <p>Feel free to email <a href="mailto:raj@humanarchive.ai">raj@humanarchive.ai</a> or want to chat? Request time <a href="https://cal.com/human-archive-0mw2ab/30min?user=human-archive-0mw2ab&amp;overlayCalendar=true">here</a>.</p>
+
+    <h2>Want to join the team?</h2>
+
+    <p class="role-group">Hardware</p>
+    <ul class="bulleted">
+      <li><a href="https://jobs.ashbyhq.com/humanarchive/2b3cb160-6588-40fe-9416-5e5205f11e48">Head of Engineering</a></li>
+      <li><a href="https://jobs.ashbyhq.com/humanarchive/6ad9527a-990b-45ce-8826-525250f40caa">Embedded / Electrical Engineer</a></li>
+      <li><a href="https://jobs.ashbyhq.com/humanarchive/9e67c170-ff6a-44f1-a2e7-69eaf78ab2f5">Camera Systems and Calibration Engineer</a></li>
+      <li><a href="https://jobs.ashbyhq.com/humanarchive/d0a106eb-9431-4f4b-93e3-9656ee137dce">Firmware Engineer</a></li>
+      <li><a href="https://jobs.ashbyhq.com/humanarchive/5afe8933-d380-4b12-a59e-ed82ccd64c6e">Head of Operations / Manufacturing</a></li>
+    </ul>
+
+    <p class="role-group">Software</p>
+    <ul class="bulleted">
+      <li><a href="https://jobs.ashbyhq.com/humanarchive/f922a56c-4f79-4d69-8d5a-f9980c118692">Research Engineer</a></li>
+    </ul>
+
+    <p class="role-group">Operations</p>
+    <ul class="bulleted">
+      <li><a href="https://jobs.ashbyhq.com/humanarchive/cd219802-77b3-48b2-bb26-2a117f318d3f">Infrastructure Engineer</a></li>
+      <li><a href="https://jobs.ashbyhq.com/humanarchive/1034b7e6-8280-4b1c-975e-b1e146070d99">Generalist</a></li>
+    </ul>
+
+    <p class="footer-links"><a href="https://x.com/babugi28">x.com</a> | <a href="mailto:team@humanarchive.ai">team@humanarchive.ai</a></p>
+  </div>
+</body>
+</html>

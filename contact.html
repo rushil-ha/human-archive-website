@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Contact — Human Archive</title>
+<style>
+  :root {
+    --phi: 1.618;
+    --base: 14px;
+
+    --text-sm: calc(var(--base) / var(--phi));
+    --text-base: var(--base);
+    --text-md: calc(var(--base) * var(--phi));
+    --text-lg: calc(var(--base) * var(--phi) * var(--phi));
+
+    --space-tight: calc(1em / var(--phi));
+    --space-1: 1em;
+    --space-2: calc(1em * var(--phi));
+    --space-3: calc(1em * var(--phi) * var(--phi));
+    --space-4: calc(1em * var(--phi) * var(--phi) * var(--phi));
+
+    --col-max: 720px;
+    --col-width: min(var(--col-max), calc(100vw / var(--phi)));
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #fbf8f0;
+    background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.22 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    background-repeat: repeat;
+    background-size: 240px 240px;
+    color: #000;
+  }
+
+  body {
+    font-family: "JetBrains Mono", Menlo, Consolas, monospace;
+    font-size: var(--text-base);
+    line-height: var(--phi);
+  }
+
+  .container {
+    width: var(--col-width);
+    margin-left: calc((100% - var(--col-width)) / var(--phi) / var(--phi));
+    margin-right: auto;
+    padding-top: var(--space-4);
+    padding-bottom: var(--space-4);
+  }
+
+  h1 {
+    font-family: Charter, "Iowan Old Style", Georgia, serif;
+    font-weight: 600;
+    font-size: calc(var(--text-lg) * 1.3);
+    line-height: 1.15;
+    margin: 0 0 var(--space-2);
+  }
+
+  h2 {
+    font-family: "JetBrains Mono", Menlo, Consolas, monospace;
+    font-weight: 600;
+    font-size: var(--text-base);
+    margin: var(--space-3) 0 var(--space-1);
+  }
+
+  p { margin: 0 0 var(--space-2); }
+
+  a { color: #000; text-decoration: underline; }
+
+  .contact-form {
+    margin: var(--space-2) 0 0;
+  }
+
+  .field {
+    margin: 0 0 var(--space-2);
+  }
+
+  .field label {
+    display: block;
+    font-size: max(11px, var(--text-sm));
+    margin: 0 0 calc(var(--space-tight) / 2);
+    letter-spacing: 0.02em;
+  }
+
+  .field input[type="text"],
+  .field input[type="email"] {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #000;
+    padding: calc(var(--space-tight) / 2) 0;
+    font-family: inherit;
+    font-size: var(--text-base);
+    color: #000;
+    outline: none;
+    box-sizing: border-box;
+  }
+
+  .field textarea {
+    width: 100%;
+    background: transparent;
+    border: 1px solid #000;
+    padding: var(--space-tight);
+    font-family: inherit;
+    font-size: var(--text-base);
+    color: #000;
+    outline: none;
+    resize: vertical;
+    min-height: calc(var(--space-3) * 2);
+    box-sizing: border-box;
+    line-height: var(--phi);
+  }
+
+  .field input:focus,
+  .field textarea:focus {
+    border-color: #000;
+    box-shadow: 0 1px 0 0 #000;
+  }
+
+  .field textarea::placeholder {
+    color: rgba(0, 0, 0, 0.4);
+    font-family: inherit;
+    font-style: italic;
+  }
+
+  .submit-btn {
+    background: transparent;
+    border: 1px solid #000;
+    color: #000;
+    font-family: inherit;
+    font-size: var(--text-base);
+    padding: calc(var(--space-tight) / 2) var(--space-2);
+    cursor: pointer;
+    margin-top: var(--space-1);
+    letter-spacing: 0.02em;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+
+  .submit-btn:hover {
+    background: #000;
+    color: #fbf8f0;
+  }
+
+  .honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .footer-links {
+    margin-top: var(--space-4);
+    font-size: max(11px, var(--text-sm));
+  }
+
+  @media (max-width: 720px) {
+    .container {
+      width: auto;
+      max-width: var(--col-max);
+      margin-left: 0;
+      margin-right: 0;
+      padding-left: var(--space-2);
+      padding-right: var(--space-2);
+      padding-top: var(--space-3);
+      padding-bottom: var(--space-3);
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>Human Archive</h1>
+
+    <h2>Get in touch</h2>
+    <p>Drop your details and we'll send over our researcher dashboard and samples.</p>
+
+    <form class="contact-form" action="https://formsubmit.co/raj@humanarchive.ai" method="POST">
+      <input type="hidden" name="_subject" value="Human Archive — new contact">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
+      <div class="honeypot"><input type="text" name="_honey" tabindex="-1" autocomplete="off"></div>
+
+      <div class="field">
+        <label for="name">name</label>
+        <input id="name" name="name" type="text" required autocomplete="name">
+      </div>
+
+      <div class="field">
+        <label for="email">email</label>
+        <input id="email" name="email" type="email" required autocomplete="email">
+      </div>
+
+      <div class="field">
+        <label for="notes">notes</label>
+        <textarea id="notes" name="notes" rows="6" required placeholder="Please fill out why you're interested in chatting?"></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">send</button>
+    </form>
+
+    <p class="footer-links"><a href="index.html">← back</a></p>
+  </div>
+</body>
+</html>
