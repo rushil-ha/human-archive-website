@@ -11,21 +11,15 @@
   :root {
     --phi: 1.618;
     --base: 14px;
-
-    /* Type scale: base × φⁿ */
-    --text-sm: calc(var(--base) / var(--phi));               /* ~9.3px → floored at 11px in use */
-    --text-base: var(--base);                                 /* 15px  */
-    --text-md: calc(var(--base) * var(--phi));                /* ~24px */
-    --text-lg: calc(var(--base) * var(--phi) * var(--phi));   /* ~39px */
-
-    /* Vertical rhythm: 1em × φⁿ */
-    --space-tight: calc(1em / var(--phi));                    /* ~0.62em — within-list gap */
-    --space-1: 1em;                                           /* 1em      — micro */
-    --space-2: calc(1em * var(--phi));                        /* ~1.62em — paragraph */
-    --space-3: calc(1em * var(--phi) * var(--phi));           /* ~2.62em — section */
-    --space-4: calc(1em * var(--phi) * var(--phi) * var(--phi)); /* ~4.24em — page */
-
-    /* Horizontal: column = viewport / φ, capped; sits at 1/φ² (~38%) from the left */
+    --text-sm: calc(var(--base) / var(--phi));
+    --text-base: var(--base);
+    --text-md: calc(var(--base) * var(--phi));
+    --text-lg: calc(var(--base) * var(--phi) * var(--phi));
+    --space-tight: calc(1em / var(--phi));
+    --space-1: 1em;
+    --space-2: calc(1em * var(--phi));
+    --space-3: calc(1em * var(--phi) * var(--phi));
+    --space-4: calc(1em * var(--phi) * var(--phi) * var(--phi));
     --col-max: 720px;
     --col-width: min(var(--col-max), calc(100vw / var(--phi)));
   }
@@ -69,24 +63,9 @@
     margin: var(--space-3) 0 var(--space-1);
   }
 
-  p {
-    margin: 0 0 var(--space-2);
-  }
+  p { margin: 0 0 var(--space-2); }
 
-  a {
-    color: #000;
-    text-decoration: underline;
-  }
-
-  ul.plain {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 var(--space-2);
-  }
-
-  ul.plain li {
-    margin: 0 0 var(--space-tight);
-  }
+  a { color: #000; text-decoration: underline; }
 
   ul.bulleted {
     padding-left: var(--space-2);
@@ -100,19 +79,6 @@
   .role-group {
     margin: var(--space-2) 0 var(--space-tight);
     font-weight: 600;
-  }
-
-  blockquote {
-    font-style: italic;
-    margin: var(--space-3) 0 var(--space-tight);
-    padding: 0;
-    padding-left: var(--space-2);
-  }
-
-  .attribution {
-    text-align: right;
-    font-size: max(11px, var(--text-sm));
-    margin: 0 0 var(--space-3);
   }
 
   .footer-links {
@@ -139,16 +105,11 @@
     <h1>Human Archive</h1>
 
     <h2>Our Mission</h2>
-    <p>We're a data lab modeling human embodied intelligence.</p>
+    <p>We're a Stanford and Berkeley data lab — backed by an $8.2M seed — modeling human embodied intelligence at scale.</p>
 
-    <p>Despite decades of research, we still barely understand human physical, cognitive, or behavioral intelligence. Our goal is to learn how humans interact with the world.</p>
+    <p>Despite decades of research, we still barely understand how humans think, move, or interact with the world. We collect, label, and synchronize video, sensor, audio, and long-horizon data through 100,000+ contributors and 500+ industry partners across homes, hotels, restaurants, agriculture, industrial, construction, and retail.</p>
 
-    <p>We collect, label, and synchronize video, sensor, audio, and long-horizon data through our 100,000+ contributor network and 500+ industry partners across homes, hotels, restaurants, agriculture, industrial, construction, retail, etc.</p>
-
-    <p>Our technology is foundational infrastructure for automating manual labor, increasing global abundance, shifting human effort toward creativity, and advancing how we understand the brain, cognition, spatial computing, and prosthetics.</p>
-
-    <h2>About Us</h2>
-    <p>We're researchers from Stanford &amp; Berkeley and we just raised our 8.2M seed round.</p>
+    <p>This is foundational infrastructure for automating manual labor, increasing global abundance, and advancing how we understand the brain, cognition, spatial computing, and prosthetics.</p>
 
     <h2>Get in touch</h2>
     <p>If you're a researcher, <a href="contact.html">click here</a> and we will send you our customer dashboard and samples. Currently OTS we have RGB, RGB-D, audio, tactile, and mocap.</p>
