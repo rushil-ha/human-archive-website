@@ -17,7 +17,7 @@
     <p class="eyebrow">Effective date: June 16, 2026</p>
 
     <h3>1. Introduction</h3>
-    <p>Human Archive, Inc., a Delaware corporation (&ldquo;Human Archive,&rdquo; &ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;), operates the Human Archive mobile application and related contributor services (collectively, the &ldquo;Service&rdquo;). The Service lets adult contributors record first-person video of everyday tasks and household activities, submit those recordings to us, and earn payouts for submissions that we approve. We then process those recordings and license the resulting datasets to artificial-intelligence and robotics customers to help improve embodied AI systems.</p>
+    <p>Human Archive, Inc., a Delaware corporation (&ldquo;Human Archive,&rdquo; &ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;), operates the Human Archive mobile application and related contributor services (collectively, the &ldquo;Service&rdquo;). The Service lets adult contributors record first-person video of everyday tasks and household activities, submit those recordings to us, and earn payouts for submissions that we approve. We then process those recordings and license the resulting datasets to artificial-intelligence and robotics customers to help improve embodied AI systems. The Service also offers an optional voice feature (&ldquo;Voice Exchange&rdquo;) in which contributors complete a spoken language assessment and take part in live two-party voice conversations that we record, store, and process as biometric data; this is described in section 4.4.</p>
     <p>This Privacy Policy describes the personal information we collect from and about contributors through the Service, how we use and share that information, and the choices and rights available to you. By creating a contributor account or otherwise using the Service, you acknowledge that you have read and understood this Privacy Policy.</p>
 
     <h3>2. Service Is for Adults Only</h3>
@@ -62,7 +62,21 @@
     </ul>
     <p>The third-party software-development kits (SDKs) currently embedded in the app are limited to (i) the Supabase SDK, which supports our authentication, contributor database, and backend services, and (ii) MediaPipe, which performs certain on-device image analysis used to calculate aggregate quality metrics about your recording (for example, the percentage of frames containing a hand). MediaPipe runs entirely on your device, and neither the recordings, the frames, nor the underlying biometric landmarks it processes are transmitted off your device by MediaPipe.</p>
     <p>Quality-assurance analysis has two parts. The hand-visibility analysis described above (MediaPipe) runs entirely on your device. Separately, to confirm that a clip shows the assigned task, the app sends a small number of still video frames — approximately one per minute while you are recording — to an automated AI service, the Google Gemini API, which returns a relevance result. Only individual still frames are sent for this check; your full recordings, your motion data, and the on-device biometric landmarks are not. Under our arrangement with this provider, the frames are used solely to return the relevance result, are not retained by the provider after the check, and are not used to train the provider's models. We disclose this check to you in the app before you record, and you consent to it as part of recording. We do not otherwise transmit your recordings or the biometric landmarks derived from them to any third party for automated quality review.</p>
-    <p>The app also uses your device's microphone and on-device speech recognition to detect your spoken "start recording" and "stop recording" commands, so you can record hands-free. This audio is processed only on your device, in real time, to recognize those commands; it is not recorded, stored, added to your clips, or transmitted off your device.</p>
+    <p>For video capture, the app also uses your device's microphone and on-device speech recognition to detect your spoken "start recording" and "stop recording" commands, so you can record hands-free. That command audio is processed only on your device, in real time, to recognize those commands; it is not recorded, stored, added to your clips, or transmitted off your device. This paragraph describes video capture only. Voice Exchange (section 4.4) is a separate, optional feature that <em>does</em> record, store, and share your voice.</p>
+
+    <p class="role-group">4.4 Voice &amp; biometric data (Voice Exchange)</p>
+    <p>If you use Voice Exchange — the optional language assessment and live two-party voice conversations — we collect audio recordings of your reading-sample assessment and of your conversations, together with data derived from them (transcripts, acoustic features, and proficiency scores). Your voice is biometric data and a biometric identifier.</p>
+    <ul class="bulleted">
+      <li><strong>Consent.</strong> We process your voice as biometric data on the basis of your explicit consent, which we collect in the app before recording and which is versioned. Your voice is "sensitive personal information" under U.S. state privacy laws (including the CCPA/CPRA) and a "biometric identifier" under Illinois' Biometric Information Privacy Act (BIPA) and similar laws.</li>
+      <li><strong>All-party recording.</strong> Conversations are between two people and both participants' voices are recorded; both consent in the app before the conversation begins.</li>
+      <li><strong>How we use it.</strong> To verify language proficiency; to build and improve speech and embodied-AI datasets and models; and to license datasets to our customers for AI research and development, as described in sections 5 and 6.</li>
+      <li><strong>Service providers.</strong> Real-time conversation audio is carried and recorded via LiveKit; automated assessment scoring uses the Google Gemini API; recordings are stored with our cloud hosting provider. These providers process voice data on our behalf under contract.</li>
+      <li><strong>Retention and destruction.</strong> We keep voice recordings and derived biometric data only as long as needed for the purposes above and per our retention schedule (section 9). For biometric identifiers, we destroy them no later than the earlier of (a) satisfaction of the purpose for which they were collected or (b) three years after your last interaction, consistent with BIPA. Approved recordings incorporated into datasets are de-identified and retained as described in sections 5.7 and 6.6.</li>
+      <li><strong>International transfer.</strong> Voice data may be processed and stored outside your country, including in the United States, subject to appropriate safeguards (section 11).</li>
+      <li><strong>Your choices.</strong> You can withdraw your consent and request deletion of your voice data at any time in Settings &rarr; Account (section 12).</li>
+      <li><strong>Eligibility.</strong> Voice Exchange is limited to contributors 18 and older.</li>
+    </ul>
+    <p>Voice Exchange is also governed by the <a href="voice-rules.html">Voice Contributor Rules</a>.</p>
 
     <h3>5. How We Use Personal Information</h3>
     <p>We use the personal information described above for the following purposes:</p>
@@ -149,6 +163,7 @@
     <ul class="bulleted">
       <li><strong>Camera</strong> — required to record the first-person video that is the core of the Service.</li>
       <li><strong>Motion sensors</strong> — used to capture device-motion data alongside your recordings.</li>
+      <li><strong>Microphone</strong> — used in two ways. During video capture, it supports on-device recognition of your spoken "start recording" and "stop recording" commands only; that command audio is not recorded, stored, or transmitted (see section 4.3). Separately, if you use Voice Exchange, the microphone records your assessment and conversation audio, which is uploaded and stored as biometric data (see section 4.4).</li>
       <li><strong>Location</strong> — used to determine regional eligibility and to support task matching when you grant the location permission.</li>
       <li><strong>Notifications</strong> — used to notify you about task availability, submission status, and account or payout updates.</li>
     </ul>
@@ -193,7 +208,7 @@
     <h3>14. Changes to This Privacy Policy</h3>
     <p>We may update this Privacy Policy from time to time. When we make material changes, we will notify you within the app or by another reasonable means and will update the &ldquo;Effective date&rdquo; at the top of this Privacy Policy. Your continued use of the Service after the updated Privacy Policy takes effect will be subject to the updated Privacy Policy. We will not apply a materially different use to personal information collected under a previous version of this Privacy Policy without giving you notice and, where required, obtaining your consent.</p>
 
-    <p class="footer-links"><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="rules.html">Rules</a> · <a href="help.html">Help</a></p>
+    <p class="footer-links"><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="rules.html">Rules</a> · <a href="voice-rules.html">Voice Rules</a> · <a href="help.html">Help</a></p>
   </div>
 </body>
 </html>
